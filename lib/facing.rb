@@ -27,7 +27,9 @@ end
 
 # Facing south
 class SouthFacing
-  # TODO: Implement facing.
+  def facing
+    :south
+  end
 
   def x_change
     0
@@ -40,7 +42,9 @@ end
 
 # Facing east
 class EastFacing
-  # TODO: Implement facing.
+  def facing
+    :east
+  end
 
   def x_change
     0
@@ -53,7 +57,9 @@ end
 
 # Facing west
 class WestFacing
-  # TODO: Implement facing.
+  def facing
+    :west
+  end
 
   def x_change
     0
