@@ -1,0 +1,8 @@
+Metrics/LineLength:
+  Max: 150
+
+Style/BlockComments:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
