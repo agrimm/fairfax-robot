@@ -25,4 +25,16 @@ RSpec.describe Robot do
     expect(robot.x).to eq(0)
     expect(robot.y).to eq(1)
   end
+
+  it "can be moved south" do
+    robot = Robot.new
+    place_command = PlaceCommand.new(0, 1, :south)
+    move_command = MoveCommand.new
+
+    place_command.run(robot)
+    move_command.run(robot)
+
+    expect(robot.x).to eq(0)
+    expect(robot.y).to eq(0)
+  end
 end

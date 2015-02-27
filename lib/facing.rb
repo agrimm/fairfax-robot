@@ -3,6 +3,7 @@ module Facing
   def self.new_of_correct_type(facing)
     case facing
     when :north then NorthFacing.new
+    when :south then SouthFacing.new
     end
   end
 end
@@ -19,5 +20,18 @@ class NorthFacing
 
   def y_change
     +1
+  end
+end
+
+# Facing south
+class SouthFacing
+  # TODO: Implement facing.
+
+  def x_change
+    0
+  end
+
+  def y_change
+    -1
   end
 end
