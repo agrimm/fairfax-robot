@@ -14,4 +14,9 @@ class Robot
     @y = y
     @facing = facing
   end
+
+  def move
+    @x += @facing.x_change
+    @y += @facing.y_change
+  end
 end

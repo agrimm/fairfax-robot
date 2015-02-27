@@ -12,4 +12,12 @@ class NorthFacing
   def facing
     :north
   end
+
+  def x_change
+    0
+  end
+
+  def y_change
+    +1
+  end
 end
