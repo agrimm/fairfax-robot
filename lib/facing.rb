@@ -23,6 +23,10 @@ class NorthFacing
   def y_change
     +1
   end
+
+  def rotate_left
+    WestFacing.new
+  end
 end
 
 # Facing south
@@ -37,6 +41,10 @@ class SouthFacing
 
   def y_change
     -1
+  end
+
+  def rotate_left
+    EastFacing.new
   end
 end
 
@@ -53,6 +61,10 @@ class EastFacing
   def y_change
     1
   end
+
+  def rotate_left
+    NorthFacing.new
+  end
 end
 
 # Facing west
@@ -67,5 +79,9 @@ class WestFacing
 
   def y_change
     -1
+  end
+
+  def rotate_left
+    SouthFacing.new
   end
 end

@@ -19,4 +19,8 @@ class Robot
     @x += @facing.x_change
     @y += @facing.y_change
   end
+
+  def rotate_left
+    @facing = @facing.rotate_left
+  end
 end
