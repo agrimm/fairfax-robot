@@ -1,9 +1,11 @@
+require "facing"
+
 # Command for placing a robot
 class PlaceCommand
   def initialize(x, y, facing)
     @x = x
     @y = y
-    @facing = facing
+    @facing = Facing.new_of_correct_type(facing)
   end
 
   def run(robot)
