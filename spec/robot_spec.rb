@@ -198,4 +198,17 @@ RSpec.describe Robot do
 
     expect { move_command.run(robot) }.to_not change(robot, :y).from(0)
   end
+
+  it "ignore commands when robot is not on table" do
+    robot = Robot.new
+    move_command = MoveCommand.new
+    left_command = LeftCommand.new
+    right_command = RightCommand.new
+    # TODO: Implement report command
+    expect do
+      move_command.run(robot)
+      left_command.run(robot)
+      right_command.run(robot)
+    end.to_not raise_error
+  end
 end

@@ -8,11 +8,16 @@ class Robot
 
   def_delegators :@facing, :facing
 
+  def initialize
+    @placed = false
+  end
+
   def place(x, y, facing)
     return unless safe_position?(x, y)
     @x = x
     @y = y
     @facing = facing
+    @placed = true
   end
 
   def safe_position?(x, y)
@@ -23,6 +28,8 @@ class Robot
   end
 
   def move
+    return unless @placed
+
     new_x = @x + @facing.x_change
     new_y = @y + @facing.y_change
 
@@ -33,10 +40,14 @@ class Robot
   end
 
   def rotate_left
+    return unless @placed
+
     @facing = @facing.rotate_left
   end
 
   def rotate_right
+    return unless @placed
+
     @facing = @facing.rotate_right
   end
 end
