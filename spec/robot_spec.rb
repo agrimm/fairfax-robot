@@ -188,4 +188,14 @@ RSpec.describe Robot do
       expect { place_command.run(robot) }.to_not change(robot, :facing).from(:north)
     end
   end
+
+  it "ignores unsafe move commands" do
+    robot = Robot.new
+    place_command = PlaceCommand.new(0, 0, :south)
+    move_command = MoveCommand.new
+
+    place_command.run(robot)
+
+    expect { move_command.run(robot) }.to_not change(robot, :y).from(0)
+  end
 end

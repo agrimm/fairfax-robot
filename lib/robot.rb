@@ -23,9 +23,13 @@ class Robot
   end
 
   def move
-    # TODO: No validation of position.
-    @x += @facing.x_change
-    @y += @facing.y_change
+    new_x = @x + @facing.x_change
+    new_y = @y + @facing.y_change
+
+    return unless safe_position?(new_x, new_y)
+
+    @x = new_x
+    @y = new_y
   end
 
   def rotate_left
