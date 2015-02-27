@@ -37,4 +37,30 @@ RSpec.describe Robot do
     expect(robot.x).to eq(0)
     expect(robot.y).to eq(0)
   end
+
+  # REVIEW: There's probably a more DRY way to specify the behavior
+  #   of east and west. I'm still a beginner at RSpec.
+  it "can be moved east" do
+    robot = Robot.new
+    place_command = PlaceCommand.new(0, 0, :east)
+    move_command = MoveCommand.new
+
+    place_command.run(robot)
+    move_command.run(robot)
+
+    expect(robot.x).to eq(0)
+    expect(robot.y).to eq(1)
+  end
+
+  it "can be moved west" do
+    robot = Robot.new
+    place_command = PlaceCommand.new(0, 1, :west)
+    move_command = MoveCommand.new
+
+    place_command.run(robot)
+    move_command.run(robot)
+
+    expect(robot.x).to eq(0)
+    expect(robot.y).to eq(0)
+  end
 end
