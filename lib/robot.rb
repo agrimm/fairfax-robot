@@ -23,4 +23,8 @@ class Robot
   def rotate_left
     @facing = @facing.rotate_left
   end
+
+  def rotate_right
+    @facing = @facing.rotate_right
+  end
 end

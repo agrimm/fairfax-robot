@@ -27,6 +27,10 @@ class NorthFacing
   def rotate_left
     WestFacing.new
   end
+
+  def rotate_right
+    EastFacing.new
+  end
 end
 
 # Facing south
@@ -45,6 +49,10 @@ class SouthFacing
 
   def rotate_left
     EastFacing.new
+  end
+
+  def rotate_right
+    WestFacing.new
   end
 end
 
@@ -65,6 +73,10 @@ class EastFacing
   def rotate_left
     NorthFacing.new
   end
+
+  def rotate_right
+    SouthFacing.new
+  end
 end
 
 # Facing west
@@ -83,5 +95,9 @@ class WestFacing
 
   def rotate_left
     SouthFacing.new
+  end
+
+  def rotate_right
+    NorthFacing.new
   end
 end

@@ -2,6 +2,7 @@ require "robot"
 require "place_command"
 require "move_command"
 require "left_command"
+require "right_command"
 
 RSpec.describe Robot do
   it "can be placed" do
@@ -101,6 +102,47 @@ RSpec.describe Robot do
 
       place_command.run(robot)
       left_command.run(robot)
+
+      expect(robot.facing).to eq(:north)
+    end
+  end
+
+  describe "right command" do
+    let(:robot) { Robot.new }
+    let(:right_command) { RightCommand.new }
+
+    it "knows east is right of north" do
+      place_command = PlaceCommand.new(0, 0, :north)
+
+      place_command.run(robot)
+      right_command.run(robot)
+
+      expect(robot.facing).to eq(:east)
+    end
+
+    it "knows south is right of east" do
+      place_command = PlaceCommand.new(0, 0, :east)
+
+      place_command.run(robot)
+      right_command.run(robot)
+
+      expect(robot.facing).to eq(:south)
+    end
+
+    it "knows west is right of south" do
+      place_command = PlaceCommand.new(0, 0, :south)
+
+      place_command.run(robot)
+      right_command.run(robot)
+
+      expect(robot.facing).to eq(:west)
+    end
+
+    it "knows north is right of west" do
+      place_command = PlaceCommand.new(0, 0, :west)
+
+      place_command.run(robot)
+      right_command.run(robot)
 
       expect(robot.facing).to eq(:north)
     end
