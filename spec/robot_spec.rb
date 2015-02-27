@@ -147,4 +147,45 @@ RSpec.describe Robot do
       expect(robot.facing).to eq(:north)
     end
   end
+
+  describe "unsafe place commands" do
+    let(:robot) do
+      robot = Robot.new
+      place_command = PlaceCommand.new(1, 2, :north)
+      place_command.run(robot)
+      robot
+    end
+
+    it "ignores x less than 0" do
+      place_command = PlaceCommand.new(-1, 3, :south)
+
+      expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
+    end
+
+    it "ignores x greater than 5" do
+      place_command = PlaceCommand.new(6, 3, :south)
+
+      expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
+    end
+
+    it "ignores y less than 0" do
+      place_command = PlaceCommand.new(3, -1, :south)
+
+      expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
+    end
+
+    it "ignores y greater than 5" do
+      place_command = PlaceCommand.new(3, 6, :south)
+
+      expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
+    end
+
+    it "entirely ignores unsafe place commands, not just the unsafe attribute" do
+      place_command = PlaceCommand.new(-1, 3, :south)
+
+      expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
+      expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
+      expect { place_command.run(robot) }.to_not change(robot, :facing).from(:north)
+    end
+  end
 end
