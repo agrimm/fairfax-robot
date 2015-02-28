@@ -11,4 +11,13 @@ RSpec.describe CommandParser do
     expect(command.y).to eq(1)
     expect(command.facing).to eq(:north)
   end
+
+  it "can parse move command" do
+    command_parser = CommandParser.new
+    line = "MOVE"
+
+    command = command_parser.parse_line(line)
+
+    expect(command).to be_a(MoveCommand)
+  end
 end

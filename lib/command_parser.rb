@@ -6,6 +6,7 @@ class CommandParser
     command_word = line.split(" ").first
     case command_word
     when "PLACE" then parse_place_command(line)
+    when "MOVE" then MoveCommand.new
     else fail "Unknown command #{command_word.inspect} in #{line.inspect}"
     end
   end
