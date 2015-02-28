@@ -2,6 +2,10 @@ require "place_command"
 
 # Parse input to produce commands
 class CommandParser
+  def parse(input)
+    input.split("\n").map(&method(:parse_line))
+  end
+
   def parse_line(line)
     command_word = line.split(" ").first
     case command_word

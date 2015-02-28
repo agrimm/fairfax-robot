@@ -47,4 +47,27 @@ RSpec.describe CommandParser do
 
     expect(command).to be_a(ReportCommand)
   end
+
+  it "can parse input consiting of multiple lines" do
+    command_parser = CommandParser.new
+    input = "PLACE 1,2,EAST\n" \
+            "MOVE\n" \
+            "MOVE\n" \
+            "LEFT\n" \
+            "MOVE\n" \
+            "REPORT"
+
+    commands = command_parser.parse(input)
+
+    expect(commands.length).to be(6)
+    expect(commands.first).to be_a(PlaceCommand)
+  end
+
+  it "does not have a problem with newlines at the end" do
+    command_parser = CommandParser.new
+    input = "MOVE\n"
+
+    commands = command_parser.parse(input)
+    expect(commands.length).to be(1)
+  end
 end
