@@ -6,6 +6,7 @@ module Facing
     when :south then SouthFacing.new
     when :east  then EastFacing.new
     when :west  then WestFacing.new
+    else fail "Invalid facing #{facing.inspect}"
     end
   end
 end
