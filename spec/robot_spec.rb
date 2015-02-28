@@ -3,10 +3,15 @@ require "place_command"
 require "move_command"
 require "left_command"
 require "right_command"
+require "factory_girl"
+# REVIEW: Is it possible to automatically load spec/factories/*.rb ,
+#   as indicated in https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#defining-factories
+#   when Rails isn't being used?
+require_relative "./factories/robot_factory"
 
 RSpec.describe Robot do
   it "can be placed" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 0, :north)
 
     place_command.run(robot)
@@ -17,7 +22,7 @@ RSpec.describe Robot do
   end
 
   it "can be moved north" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 0, :north)
     move_command = MoveCommand.new
 
@@ -29,7 +34,7 @@ RSpec.describe Robot do
   end
 
   it "can be moved south" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 1, :south)
     move_command = MoveCommand.new
 
@@ -43,7 +48,7 @@ RSpec.describe Robot do
   # REVIEW: There's probably a more DRY way to specify the behavior
   #   of east and west. I'm still a beginner at RSpec.
   it "can be moved east" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 0, :east)
     move_command = MoveCommand.new
 
@@ -55,7 +60,7 @@ RSpec.describe Robot do
   end
 
   it "can be moved west" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 1, :west)
     move_command = MoveCommand.new
 
@@ -67,7 +72,7 @@ RSpec.describe Robot do
   end
 
   describe "left command" do
-    let(:robot) { Robot.new }
+    let(:robot) { FactoryGirl.build(:robot) }
     let(:left_command) { LeftCommand.new }
 
     it "knows west is left of north" do
@@ -108,7 +113,7 @@ RSpec.describe Robot do
   end
 
   describe "right command" do
-    let(:robot) { Robot.new }
+    let(:robot) { FactoryGirl.build(:robot) }
     let(:right_command) { RightCommand.new }
 
     it "knows east is right of north" do
@@ -150,7 +155,7 @@ RSpec.describe Robot do
 
   describe "unsafe place commands" do
     let(:robot) do
-      robot = Robot.new
+      robot = FactoryGirl.build(:robot)
       place_command = PlaceCommand.new(1, 2, :north)
       place_command.run(robot)
       robot
@@ -190,7 +195,7 @@ RSpec.describe Robot do
   end
 
   it "ignores unsafe move commands" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 0, :south)
     move_command = MoveCommand.new
 
@@ -200,7 +205,7 @@ RSpec.describe Robot do
   end
 
   it "ignore commands when robot is not on table" do
-    robot = Robot.new
+    robot = FactoryGirl.build(:robot)
     move_command = MoveCommand.new
     left_command = LeftCommand.new
     right_command = RightCommand.new
