@@ -47,6 +47,7 @@ RSpec.describe Robot do
 
   # REVIEW: There's probably a more DRY way to specify the behavior
   #   of east and west. I'm still a beginner at RSpec.
+  #   (I previously used test/unit and minitest)
   it "can be moved east" do
     robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 0, :east)
