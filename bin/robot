@@ -1,0 +1,7 @@
+require_relative "../lib/runner"
+
+if __FILE__ == $PROGRAM_NAME
+  abort "robot input.txt output.txt" unless ARGV.count == 2
+  input_filename, output_filename = ARGV
+  Runner.run(input_filename, output_filename)
+end
