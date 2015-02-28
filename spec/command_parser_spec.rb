@@ -20,4 +20,31 @@ RSpec.describe CommandParser do
 
     expect(command).to be_a(MoveCommand)
   end
+
+  it "can parse left command" do
+    command_parser = CommandParser.new
+    line = "LEFT"
+
+    command = command_parser.parse_line(line)
+
+    expect(command).to be_a(LeftCommand)
+  end
+
+  it "can parse right command" do
+    command_parser = CommandParser.new
+    line = "RIGHT"
+
+    command = command_parser.parse_line(line)
+
+    expect(command).to be_a(RightCommand)
+  end
+
+  it "can parse report command" do
+    command_parser = CommandParser.new
+    line = "REPORT"
+
+    command = command_parser.parse_line(line)
+
+    expect(command).to be_a(ReportCommand)
+  end
 end
