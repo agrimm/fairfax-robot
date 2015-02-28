@@ -167,8 +167,8 @@ RSpec.describe Robot do
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
     end
 
-    it "ignores x greater than 5" do
-      place_command = PlaceCommand.new(6, 3, :south)
+    it "ignores x greater than or equal to 5" do
+      place_command = PlaceCommand.new(5, 3, :south)
 
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
     end
@@ -179,8 +179,8 @@ RSpec.describe Robot do
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
     end
 
-    it "ignores y greater than 5" do
-      place_command = PlaceCommand.new(3, 6, :south)
+    it "ignores y greater than or equal to 5" do
+      place_command = PlaceCommand.new(3, 5, :south)
 
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
     end

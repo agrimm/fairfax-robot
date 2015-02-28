@@ -22,11 +22,13 @@ class Robot
     @placed = true
   end
 
+  # 5 by 5 table starting at 0,0
+  # so a value of 5 is not safe
   def safe_position?(x, y)
     x >= 0 &&
-      x <= 5 &&
+      x <= 4 &&
       y >= 0 &&
-      y <= 5
+      y <= 4
   end
 
   def move
