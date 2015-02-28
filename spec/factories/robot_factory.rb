@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :robot do
-    initialize_with { new }
+    reporter Reporter.new
+
+    initialize_with { new(reporter) }
   end
 end

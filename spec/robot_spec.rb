@@ -3,6 +3,7 @@ require "place_command"
 require "move_command"
 require "left_command"
 require "right_command"
+require "report_command"
 require "factory_girl"
 # REVIEW: Is it possible to automatically load spec/factories/*.rb ,
 #   as indicated in https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#defining-factories
@@ -215,5 +216,16 @@ RSpec.describe Robot do
       left_command.run(robot)
       right_command.run(robot)
     end.to_not raise_error
+  end
+
+  it "reports its position" do
+    robot = FactoryGirl.build(:robot)
+    place_command = PlaceCommand.new(0, 1, :north)
+    report_command = ReportCommand.new
+
+    place_command.run(robot)
+    report_command.run(robot)
+
+    expect(robot.output).to include("0,1,NORTH")
   end
 end

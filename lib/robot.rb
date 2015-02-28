@@ -7,9 +7,11 @@ class Robot
   attr_reader :x, :y
 
   def_delegators :@facing, :facing
+  def_delegators :@reporter, :output
 
-  def initialize
+  def initialize(reporter)
     @placed = false
+    @reporter = reporter
   end
 
   def place(x, y, facing)
@@ -49,5 +51,10 @@ class Robot
     return unless @placed
 
     @facing = @facing.rotate_right
+  end
+
+  def report
+    # TODO: Ignore this command if the robot has not been placed.
+    @reporter.report(@x, @y, @facing)
   end
 end
