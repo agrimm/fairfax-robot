@@ -1,4 +1,3 @@
-require "robot"
 require "place_command"
 require "move_command"
 require "left_command"

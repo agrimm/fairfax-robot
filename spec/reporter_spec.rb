@@ -1,4 +1,5 @@
 require "reporter"
+require "facing"
 
 RSpec.describe Reporter do
   it "reports its position" do

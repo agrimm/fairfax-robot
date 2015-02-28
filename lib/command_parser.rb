@@ -1,4 +1,8 @@
 require "place_command"
+require "move_command"
+require "left_command"
+require "right_command"
+require "report_command"
 
 # Parse input to produce commands
 class CommandParser

@@ -1,3 +1,6 @@
+require "robot"
+require "reporter"
+
 FactoryGirl.define do
   factory :robot do
     reporter Reporter.new
