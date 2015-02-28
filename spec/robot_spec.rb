@@ -210,11 +210,12 @@ RSpec.describe Robot do
     move_command = MoveCommand.new
     left_command = LeftCommand.new
     right_command = RightCommand.new
-    # TODO: Implement report command
+    report_command = ReportCommand.new
     expect do
       move_command.run(robot)
       left_command.run(robot)
       right_command.run(robot)
+      report_command.run(robot)
     end.to_not raise_error
   end
 

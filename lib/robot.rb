@@ -54,7 +54,8 @@ class Robot
   end
 
   def report
-    # TODO: Ignore this command if the robot has not been placed.
+    return unless @placed
+
     @reporter.report(@x, @y, @facing)
   end
 end
