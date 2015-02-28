@@ -42,8 +42,6 @@ RSpec.describe "integration specs" do
     commands = command_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
-    pending "Some classes related to Facing have incorrect values"
-
     expect(robot.output).to eq("3,3,NORTH")
   end
 end

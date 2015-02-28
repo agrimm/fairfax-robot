@@ -55,13 +55,13 @@ RSpec.describe Robot do
     place_command.run(robot)
     move_command.run(robot)
 
-    expect(robot.x).to eq(0)
-    expect(robot.y).to eq(1)
+    expect(robot.x).to eq(1)
+    expect(robot.y).to eq(0)
   end
 
   it "can be moved west" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 1, :west)
+    place_command = PlaceCommand.new(1, 0, :west)
     move_command = MoveCommand.new
 
     place_command.run(robot)

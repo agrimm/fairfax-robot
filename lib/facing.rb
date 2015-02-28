@@ -64,11 +64,11 @@ class EastFacing
   end
 
   def x_change
-    0
+    +1
   end
 
   def y_change
-    1
+    0
   end
 
   def rotate_left
@@ -87,11 +87,11 @@ class WestFacing
   end
 
   def x_change
-    0
+    -1
   end
 
   def y_change
-    -1
+    0
   end
 
   def rotate_left
