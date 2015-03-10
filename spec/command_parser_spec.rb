@@ -1,61 +1,49 @@
 require "command_parser"
 
 RSpec.describe CommandParser do
-  it "can parse place command" do
+  it "can parse place line" do
     command_parser = CommandParser.new
-    line = "PLACE 0,1,NORTH"
+    line = "0 1 N"
 
-    command = command_parser.parse_line(line)
+    command = command_parser.parse_place_line(line)
 
     expect(command.x).to eq(0)
     expect(command.y).to eq(1)
-    expect(command.facing).to eq(:north)
+    expect(command.facing).to eq(:N)
   end
 
   it "can parse move command" do
     command_parser = CommandParser.new
-    line = "MOVE"
+    command_string = "M"
 
-    command = command_parser.parse_line(line)
+    command = command_parser.parse_command_string(command_string)
 
     expect(command).to be_a(MoveCommand)
   end
 
   it "can parse left command" do
     command_parser = CommandParser.new
-    line = "LEFT"
+    command_string = "L"
 
-    command = command_parser.parse_line(line)
+    command = command_parser.parse_command_string(command_string)
 
     expect(command).to be_a(LeftCommand)
   end
 
   it "can parse right command" do
     command_parser = CommandParser.new
-    line = "RIGHT"
+    command_string = "R"
 
-    command = command_parser.parse_line(line)
+    command = command_parser.parse_command_string(command_string)
 
     expect(command).to be_a(RightCommand)
   end
 
-  it "can parse report command" do
-    command_parser = CommandParser.new
-    line = "REPORT"
-
-    command = command_parser.parse_line(line)
-
-    expect(command).to be_a(ReportCommand)
-  end
-
   it "can parse input consiting of multiple lines" do
     command_parser = CommandParser.new
-    input = "PLACE 1,2,EAST\n" \
-            "MOVE\n" \
-            "MOVE\n" \
-            "LEFT\n" \
-            "MOVE\n" \
-            "REPORT"
+    input = "5 5\n" \
+            "1 2 E\n" \
+            "MMLM"
 
     commands = command_parser.parse(input)
 
@@ -65,9 +53,10 @@ RSpec.describe CommandParser do
 
   it "does not have a problem with newlines at the end" do
     command_parser = CommandParser.new
-    input = "MOVE\n"
+    input = "5 5\n" \
+            "1 2 E\n" \
+            "MMLM\n"
 
-    commands = command_parser.parse(input)
-    expect(commands.length).to be(1)
+    expect { command_parser.parse(input) }.to_not raise_error
   end
 end

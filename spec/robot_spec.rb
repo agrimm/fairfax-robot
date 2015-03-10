@@ -12,18 +12,18 @@ require_relative "./factories/robot_factory"
 RSpec.describe Robot do
   it "can be placed" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 0, :north)
+    place_command = PlaceCommand.new(0, 0, :N)
 
     place_command.run(robot)
 
     expect(robot.x).to eq(0)
     expect(robot.y).to eq(0)
-    expect(robot.facing).to eq(:north)
+    expect(robot.facing).to eq(:N)
   end
 
   it "can be moved north" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 0, :north)
+    place_command = PlaceCommand.new(0, 0, :N)
     move_command = MoveCommand.new
 
     place_command.run(robot)
@@ -35,7 +35,7 @@ RSpec.describe Robot do
 
   it "can be moved south" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 1, :south)
+    place_command = PlaceCommand.new(0, 1, :S)
     move_command = MoveCommand.new
 
     place_command.run(robot)
@@ -50,7 +50,7 @@ RSpec.describe Robot do
   #   (I previously used test/unit and minitest)
   it "can be moved east" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 0, :east)
+    place_command = PlaceCommand.new(0, 0, :E)
     move_command = MoveCommand.new
 
     place_command.run(robot)
@@ -62,7 +62,7 @@ RSpec.describe Robot do
 
   it "can be moved west" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(1, 0, :west)
+    place_command = PlaceCommand.new(1, 0, :W)
     move_command = MoveCommand.new
 
     place_command.run(robot)
@@ -77,39 +77,39 @@ RSpec.describe Robot do
     let(:left_command) { LeftCommand.new }
 
     it "knows west is left of north" do
-      place_command = PlaceCommand.new(0, 0, :north)
+      place_command = PlaceCommand.new(0, 0, :N)
 
       place_command.run(robot)
       left_command.run(robot)
 
-      expect(robot.facing).to eq(:west)
+      expect(robot.facing).to eq(:W)
     end
 
     it "knows south is left of west" do
-      place_command = PlaceCommand.new(0, 0, :west)
+      place_command = PlaceCommand.new(0, 0, :W)
 
       place_command.run(robot)
       left_command.run(robot)
 
-      expect(robot.facing).to eq(:south)
+      expect(robot.facing).to eq(:S)
     end
 
     it "knows east is left of south" do
-      place_command = PlaceCommand.new(0, 0, :south)
+      place_command = PlaceCommand.new(0, 0, :S)
 
       place_command.run(robot)
       left_command.run(robot)
 
-      expect(robot.facing).to eq(:east)
+      expect(robot.facing).to eq(:E)
     end
 
     it "knows north is left of east" do
-      place_command = PlaceCommand.new(0, 0, :east)
+      place_command = PlaceCommand.new(0, 0, :E)
 
       place_command.run(robot)
       left_command.run(robot)
 
-      expect(robot.facing).to eq(:north)
+      expect(robot.facing).to eq(:N)
     end
   end
 
@@ -118,86 +118,86 @@ RSpec.describe Robot do
     let(:right_command) { RightCommand.new }
 
     it "knows east is right of north" do
-      place_command = PlaceCommand.new(0, 0, :north)
+      place_command = PlaceCommand.new(0, 0, :N)
 
       place_command.run(robot)
       right_command.run(robot)
 
-      expect(robot.facing).to eq(:east)
+      expect(robot.facing).to eq(:E)
     end
 
     it "knows south is right of east" do
-      place_command = PlaceCommand.new(0, 0, :east)
+      place_command = PlaceCommand.new(0, 0, :E)
 
       place_command.run(robot)
       right_command.run(robot)
 
-      expect(robot.facing).to eq(:south)
+      expect(robot.facing).to eq(:S)
     end
 
     it "knows west is right of south" do
-      place_command = PlaceCommand.new(0, 0, :south)
+      place_command = PlaceCommand.new(0, 0, :S)
 
       place_command.run(robot)
       right_command.run(robot)
 
-      expect(robot.facing).to eq(:west)
+      expect(robot.facing).to eq(:W)
     end
 
     it "knows north is right of west" do
-      place_command = PlaceCommand.new(0, 0, :west)
+      place_command = PlaceCommand.new(0, 0, :W)
 
       place_command.run(robot)
       right_command.run(robot)
 
-      expect(robot.facing).to eq(:north)
+      expect(robot.facing).to eq(:N)
     end
   end
 
   describe "unsafe place commands" do
     let(:robot) do
       robot = FactoryGirl.build(:robot)
-      place_command = PlaceCommand.new(1, 2, :north)
+      place_command = PlaceCommand.new(1, 2, :N)
       place_command.run(robot)
       robot
     end
 
     it "ignores x less than 0" do
-      place_command = PlaceCommand.new(-1, 3, :south)
+      place_command = PlaceCommand.new(-1, 3, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
     end
 
     it "ignores x greater than or equal to 5" do
-      place_command = PlaceCommand.new(5, 3, :south)
+      place_command = PlaceCommand.new(5, 3, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
     end
 
     it "ignores y less than 0" do
-      place_command = PlaceCommand.new(3, -1, :south)
+      place_command = PlaceCommand.new(3, -1, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
     end
 
     it "ignores y greater than or equal to 5" do
-      place_command = PlaceCommand.new(3, 5, :south)
+      place_command = PlaceCommand.new(3, 5, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
     end
 
     it "entirely ignores unsafe place commands, not just the unsafe attribute" do
-      place_command = PlaceCommand.new(-1, 3, :south)
+      place_command = PlaceCommand.new(-1, 3, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
-      expect { place_command.run(robot) }.to_not change(robot, :facing).from(:north)
+      expect { place_command.run(robot) }.to_not change(robot, :facing).from(:N)
     end
   end
 
   it "ignores unsafe move commands" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 0, :south)
+    place_command = PlaceCommand.new(0, 0, :S)
     move_command = MoveCommand.new
 
     place_command.run(robot)
@@ -221,12 +221,12 @@ RSpec.describe Robot do
 
   it "reports its position" do
     robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 1, :north)
+    place_command = PlaceCommand.new(0, 1, :N)
     report_command = ReportCommand.new
 
     place_command.run(robot)
     report_command.run(robot)
 
-    expect(robot.output).to include("0,1,NORTH")
+    expect(robot.output).to include("0 1 N")
   end
 end

@@ -22,7 +22,7 @@ class Reporter
     end
 
     def to_s
-      [@x, @y, @facing.facing.upcase].join(",")
+      [@x, @y, @facing.facing.upcase].join(" ")
     end
   end
 end

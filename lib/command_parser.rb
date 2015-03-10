@@ -7,30 +7,35 @@ require "report_command"
 # Parse input to produce commands
 class CommandParser
   def parse(input)
-    input.split("\n").map(&method(:parse_line))
+    # FIXME: This will have to handle multiple robots
+    _paddock_line, place_line, instruction_line = input.split("\n")
+    place_command = parse_place_line(place_line)
+    other_commands = parse_instruction_line(instruction_line)
+    # FIXME: Get rid of report command.
+    report_command = ReportCommand.new
+    [place_command] + other_commands + [report_command]
   end
 
-  def parse_line(line)
-    command_word = line.split(" ").first
-    case command_word
-    when "PLACE" then parse_place_command(line)
-    when "MOVE" then MoveCommand.new
-    when "LEFT" then LeftCommand.new
-    when "RIGHT" then RightCommand.new
-    when "REPORT" then ReportCommand.new
-    else fail "Unknown command #{command_word.inspect} in #{line.inspect}"
-    end
-  end
-
-  def parse_place_command(line)
-    value_substr = line.gsub("PLACE ", "")
-
-    x_str, y_str, facing_str = value_substr.split(",")
+  def parse_place_line(line)
+    x_str, y_str, facing_str = line.split(" ")
 
     x = Integer(x_str)
     y = Integer(y_str)
-    facing = facing_str.downcase.to_sym
+    facing = facing_str.to_sym
 
     PlaceCommand.new(x, y, facing)
+  end
+
+  def parse_instruction_line(instruction_line)
+    instruction_line.split("").map(&method(:parse_command_string))
+  end
+
+  def parse_command_string(command_string)
+    case command_string
+    when "M" then MoveCommand.new
+    when "L" then LeftCommand.new
+    when "R" then RightCommand.new
+    else fail "Unknown command #{command_string.inspect}"
+    end
   end
 end

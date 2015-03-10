@@ -2,10 +2,10 @@
 module Facing
   def self.new_of_correct_type(facing)
     case facing
-    when :north then NorthFacing.new
-    when :south then SouthFacing.new
-    when :east  then EastFacing.new
-    when :west  then WestFacing.new
+    when :N then NorthFacing.new
+    when :S then SouthFacing.new
+    when :E  then EastFacing.new
+    when :W  then WestFacing.new
     else fail "Invalid facing #{facing.inspect}"
     end
   end
@@ -14,7 +14,7 @@ end
 # Facing north
 class NorthFacing
   def facing
-    :north
+    :N
   end
 
   def x_change
@@ -37,7 +37,7 @@ end
 # Facing south
 class SouthFacing
   def facing
-    :south
+    :S
   end
 
   def x_change
@@ -60,7 +60,7 @@ end
 # Facing east
 class EastFacing
   def facing
-    :east
+    :E
   end
 
   def x_change
@@ -83,7 +83,7 @@ end
 # Facing west
 class WestFacing
   def facing
-    :west
+    :W
   end
 
   def x_change
