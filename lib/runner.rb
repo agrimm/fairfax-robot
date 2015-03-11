@@ -30,12 +30,20 @@ class Runner
   end
 
   def run_commands
-    @per_robot_commands.each do |commands|
-      robot = Robot.new(@reporter, @paddock)
+    @per_robot_commands.each(&method(:run_commands_for_specific_robot))
+  end
 
-      commands.each do |command|
+  def run_commands_for_specific_robot(commands)
+    robot = Robot.new(@reporter, @paddock)
+
+    commands.each do |command|
+      begin
         command.run(robot)
+      rescue Robot::CollisionError => e
+        abort e.message
       end
     end
+
+    robot.register_position
   end
 end

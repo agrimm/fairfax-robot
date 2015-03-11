@@ -154,33 +154,6 @@ RSpec.describe Robot do
     end
   end
 
-  describe "unsafe place commands" do
-    let(:robot) do
-      robot = FactoryGirl.build(:robot)
-      place_command = PlaceCommand.new(1, 2, :N)
-      place_command.run(robot)
-      robot
-    end
-
-    it "entirely ignores unsafe place commands, not just the unsafe attribute" do
-      place_command = PlaceCommand.new(-1, 3, :S)
-
-      expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
-      expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
-      expect { place_command.run(robot) }.to_not change(robot, :facing).from(:N)
-    end
-  end
-
-  it "ignores unsafe move commands" do
-    robot = FactoryGirl.build(:robot)
-    place_command = PlaceCommand.new(0, 0, :S)
-    move_command = MoveCommand.new
-
-    place_command.run(robot)
-
-    expect { move_command.run(robot) }.to_not change(robot, :y).from(0)
-  end
-
   it "reports its position" do
     robot = FactoryGirl.build(:robot)
     place_command = PlaceCommand.new(0, 1, :N)
@@ -190,5 +163,38 @@ RSpec.describe Robot do
     report_command.run(robot)
 
     expect(robot.output).to include("0 1 N")
+  end
+
+  it "raises when it moves into another robot" do
+    reporter = Reporter.new(nil)
+    paddock = Paddock.new(4, 4)
+    paddock.register_position(0, 1)
+    robot = Robot.new(reporter, paddock)
+
+    place_command = PlaceCommand.new(0, 0, :N)
+    move_command = MoveCommand.new
+
+    place_command.run(robot)
+    expect { move_command.run(robot) }.to raise_error(Robot::CollisionError)
+  end
+
+  it "raises when it is placed onto another robot" do
+    reporter = Reporter.new(nil)
+    paddock = Paddock.new(4, 4)
+    paddock.register_position(0, 1)
+    robot = Robot.new(reporter, paddock)
+
+    place_command = PlaceCommand.new(0, 1, :N)
+
+    expect { place_command.run(robot) }.to raise_error(Robot::CollisionError)
+  end
+
+  it "can register its position" do
+    robot = FactoryGirl.build(:robot)
+    place_command = PlaceCommand.new(0, 1, :N)
+    place_command.run(robot)
+    robot.register_position
+
+    expect(robot.safe_position?(0, 1)).to be false
   end
 end

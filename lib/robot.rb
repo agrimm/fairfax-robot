@@ -16,20 +16,16 @@ class Robot
   end
 
   def place(x, y, facing)
-    return unless safe_position?(x, y)
+    fail CollisionError, "Collision of two robots at #{x} #{y}" unless safe_position?(x, y)
     @x = x
     @y = y
     @facing = facing
   end
 
   def move
-    new_x = @x + @facing.x_change
-    new_y = @y + @facing.y_change
-
-    return unless safe_position?(new_x, new_y)
-
-    @x = new_x
-    @y = new_y
+    @x += @facing.x_change
+    @y += @facing.y_change
+    fail CollisionError, "Collison of two robots at #{@x} #{@y}" unless safe_position?(@x, @y)
   end
 
   def rotate_left
@@ -43,4 +39,10 @@ class Robot
   def report
     @reporter.report(@x, @y, @facing)
   end
+
+  def register_position
+    @paddock.register_position(@x, @y)
+  end
+
+  CollisionError = Class.new(StandardError)
 end
