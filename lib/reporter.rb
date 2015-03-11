@@ -6,7 +6,6 @@ class Reporter
   end
 
   def report(x, y, facing)
-    # REVIEW: Is it possible for multiple report commands to happen?
     @reports << Report.new(x, y, facing)
   end
 

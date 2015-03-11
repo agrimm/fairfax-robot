@@ -41,4 +41,18 @@ RSpec.describe "integration specs" do
 
     expect(reporter.output).to eq("3 3 N")
   end
+
+  it "gives the correct result for the example from Fairfax" do
+    input = "5 5\n" \
+            "1 2 N\n" \
+            "LMLMLMLMM\n" \
+            "3 3 E\n" \
+            "MMRMMRMRRM\n"
+
+    paddock, per_robot_commands = input_parser.parse(input)
+    runner = Runner.new(reporter, paddock, per_robot_commands)
+    runner.run
+
+    expect(reporter.output).to eq("1 3 N\n" "5 1 E")
+  end
 end
