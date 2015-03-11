@@ -54,7 +54,8 @@ RSpec.describe InputParser do
             "1 2 E\n" \
             "MMLM"
 
-    _paddock, commands = input_parser.parse(input)
+    _paddock, per_robot_commands = input_parser.parse(input)
+    commands = per_robot_commands.first
 
     expect(commands.length).to be(6)
     expect(commands.first).to be_a(PlaceCommand)
@@ -76,5 +77,18 @@ RSpec.describe InputParser do
             "\n"
 
     expect { input_parser.parse(input) }.to_not raise_error
+  end
+
+  it "can parse information for multiple robots" do
+    input_parser = InputParser.new
+    input = "5 5\n" \
+            "1 2 E\n" \
+            "\n" \
+            "3 4 E\n" \
+            "\n"
+
+    _paddock, per_robot_commands = input_parser.parse(input)
+    second_robot_place_command = per_robot_commands.fetch(1).fetch(0)
+    expect(second_robot_place_command.x).to eq(3)
   end
 end

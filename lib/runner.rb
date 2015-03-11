@@ -12,16 +12,16 @@ class Runner
 
     input = File.read(input_filename)
     input_parser = InputParser.new
-    paddock, commands = input_parser.parse(input)
+    paddock, per_robot_commands = input_parser.parse(input)
 
-    runner = new(reporter, paddock, commands, output_filename)
+    runner = new(reporter, paddock, per_robot_commands, output_filename)
     runner.run
   end
 
-  def initialize(reporter, paddock, commands, output_filename)
+  def initialize(reporter, paddock, per_robot_commands, output_filename)
     @reporter = reporter
     @paddock = paddock
-    @commands = commands
+    @per_robot_commands = per_robot_commands
     @output_filename = output_filename
   end
 
@@ -31,10 +31,12 @@ class Runner
   end
 
   def run_commands
-    robot = Robot.new(@reporter, @paddock)
+    @per_robot_commands.each do |commands|
+      robot = Robot.new(@reporter, @paddock)
 
-    @commands.each do |command|
-      command.run(robot)
+      commands.each do |command|
+        command.run(robot)
+      end
     end
   end
 end

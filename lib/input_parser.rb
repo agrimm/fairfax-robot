@@ -11,12 +11,10 @@ require "report_command"
 #   * Commands for each robot
 class InputParser
   def parse(input)
-    # FIXME: This will have to handle multiple robots
-    paddock_line, place_line, instruction_line = input.split("\n")
-    instruction_line ||= ""
+    paddock_line, *robot_lines = input.split("\n")
     paddock = parse_paddock_line(paddock_line)
-    commands = parse_robot_line_pair(place_line, instruction_line)
-    [paddock, commands]
+    per_robot_commands = parse_robot_lines(robot_lines)
+    [paddock, per_robot_commands]
   end
 
   def parse_paddock_line(line)
@@ -25,6 +23,13 @@ class InputParser
     x = Integer(x_str)
     y = Integer(y_str)
     Paddock.new(x, y)
+  end
+
+  def parse_robot_lines(robot_lines)
+    robot_lines.each_slice(2).map do |place_line, instruction_line|
+      instruction_line ||= ""
+      parse_robot_line_pair(place_line, instruction_line)
+    end
   end
 
   def parse_robot_line_pair(place_line, instruction_line)
