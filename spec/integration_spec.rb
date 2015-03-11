@@ -1,47 +1,44 @@
-require "factory_girl"
-require_relative "./factories/robot_factory"
+require "reporter"
 require "input_parser"
+require "runner"
 
 RSpec.describe "integration specs" do
-  it "gives the correct result for example a" do
-    robot = FactoryGirl.build(:robot)
+  let(:input_parser) { InputParser.new }
+  let(:reporter) { Reporter.new(nil) }
+
+  it "gives the correct result for example a from REA" do
     input = "5 5\n" \
             "0 0 N\n" \
             "M\n"
 
-    input_parser = InputParser.new
-    _paddock, per_robot_commands = input_parser.parse(input)
-    commands = per_robot_commands.first
-    commands.each { |command| command.run(robot) }
+    paddock, per_robot_commands = input_parser.parse(input)
+    runner = Runner.new(reporter, paddock, per_robot_commands)
+    runner.run
 
-    expect(robot.output).to eq("0 1 N")
+    expect(reporter.output).to eq("0 1 N")
   end
 
-  it "gives the correct result for example b" do
-    robot = FactoryGirl.build(:robot)
+  it "gives the correct result for example b from REA" do
     input = "5 5\n" \
             "0 0 N\n" \
             "L\n"
 
-    input_parser = InputParser.new
-    _paddock, per_robot_commands = input_parser.parse(input)
-    commands = per_robot_commands.first
-    commands.each { |command| command.run(robot) }
+    paddock, per_robot_commands = input_parser.parse(input)
+    runner = Runner.new(reporter, paddock, per_robot_commands)
+    runner.run
 
-    expect(robot.output).to eq("0 0 W")
+    expect(reporter.output).to eq("0 0 W")
   end
 
-  it "gives the correct result for example c" do
-    robot = FactoryGirl.build(:robot)
+  it "gives the correct result for example c from REA" do
     input = "5 5\n" \
             "1 2 E\n" \
             "MMLM\n"
 
-    input_parser = InputParser.new
-    _paddock, per_robot_commands = input_parser.parse(input)
-    commands = per_robot_commands.first
-    commands.each { |command| command.run(robot) }
+    paddock, per_robot_commands = input_parser.parse(input)
+    runner = Runner.new(reporter, paddock, per_robot_commands)
+    runner.run
 
-    expect(robot.output).to eq("3 3 N")
+    expect(reporter.output).to eq("3 3 N")
   end
 end
