@@ -1,6 +1,15 @@
 require "input_parser"
 
 RSpec.describe InputParser do
+  it "can parse paddock line" do
+    input_parser = InputParser.new
+    line = "4 5"
+    paddock = input_parser.parse_paddock_line(line)
+
+    expect(paddock.max_x).to eq(4)
+    expect(paddock.max_y).to eq(5)
+  end
+
   it "can parse place line" do
     input_parser = InputParser.new
     line = "0 1 N"
@@ -45,7 +54,7 @@ RSpec.describe InputParser do
             "1 2 E\n" \
             "MMLM"
 
-    commands = input_parser.parse(input)
+    _paddock, commands = input_parser.parse(input)
 
     expect(commands.length).to be(6)
     expect(commands.first).to be_a(PlaceCommand)

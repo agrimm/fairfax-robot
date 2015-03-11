@@ -1,3 +1,4 @@
+require "paddock"
 require "place_command"
 require "move_command"
 require "left_command"
@@ -5,17 +6,28 @@ require "right_command"
 require "report_command"
 
 # Parse input about:
+#   * The paddock
 #   * Where each robot starts
 #   * Commands for each robot
 class InputParser
   def parse(input)
     # FIXME: This will have to handle multiple robots
-    _paddock_line, place_line, instruction_line = input.split("\n")
+    paddock_line, place_line, instruction_line = input.split("\n")
+    paddock = parse_paddock_line(paddock_line)
     place_command = parse_place_line(place_line)
     other_commands = parse_instruction_line(instruction_line)
     # FIXME: Get rid of report command.
     report_command = ReportCommand.new
-    [place_command] + other_commands + [report_command]
+    commands = [place_command] + other_commands + [report_command]
+    [paddock, commands]
+  end
+
+  def parse_paddock_line(line)
+    x_str, y_str = line.split(" ")
+
+    x = Integer(x_str)
+    y = Integer(y_str)
+    Paddock.new(x, y)
   end
 
   def parse_place_line(line)

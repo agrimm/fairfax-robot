@@ -10,7 +10,7 @@ RSpec.describe "integration specs" do
             "M\n"
 
     input_parser = InputParser.new
-    commands = input_parser.parse(input)
+    _paddock, commands = input_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
     expect(robot.output).to eq("0 1 N")
@@ -23,7 +23,7 @@ RSpec.describe "integration specs" do
             "L\n"
 
     input_parser = InputParser.new
-    commands = input_parser.parse(input)
+    _paddock, commands = input_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
     expect(robot.output).to eq("0 0 W")
@@ -36,7 +36,7 @@ RSpec.describe "integration specs" do
             "MMLM\n"
 
     input_parser = InputParser.new
-    commands = input_parser.parse(input)
+    _paddock, commands = input_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
     expect(robot.output).to eq("3 3 N")
