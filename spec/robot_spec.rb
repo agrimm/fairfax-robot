@@ -168,10 +168,22 @@ RSpec.describe Robot do
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
     end
 
+    it "allows x of 0" do
+      place_command = PlaceCommand.new(0, 3, :S)
+
+      expect { place_command.run(robot) }.to change(robot, :x).from(1).to(0)
+    end
+
     it "ignores x greater than or equal to 5" do
       place_command = PlaceCommand.new(5, 3, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :x).from(1)
+    end
+
+    it "allows x of 4" do
+      place_command = PlaceCommand.new(4, 3, :S)
+
+      expect { place_command.run(robot) }.to change(robot, :x).from(1).to(4)
     end
 
     it "ignores y less than 0" do
@@ -180,10 +192,22 @@ RSpec.describe Robot do
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
     end
 
+    it "allows y of 0" do
+      place_command = PlaceCommand.new(3, 0, :S)
+
+      expect { place_command.run(robot) }.to change(robot, :y).from(2).to(0)
+    end
+
     it "ignores y greater than or equal to 5" do
       place_command = PlaceCommand.new(3, 5, :S)
 
       expect { place_command.run(robot) }.to_not change(robot, :y).from(2)
+    end
+
+    it "allows y of 4" do
+      place_command = PlaceCommand.new(3, 4, :S)
+
+      expect { place_command.run(robot) }.to change(robot, :y).from(2).to(4)
     end
 
     it "entirely ignores unsafe place commands, not just the unsafe attribute" do
