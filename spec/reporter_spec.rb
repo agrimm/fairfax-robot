@@ -3,7 +3,7 @@ require "facing"
 
 RSpec.describe Reporter do
   it "reports its position" do
-    reporter = Reporter.new
+    reporter = Reporter.new(nil)
     facing = Facing.new_of_correct_type(:N)
     reporter.report(0, 1, facing)
 

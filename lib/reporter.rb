@@ -1,6 +1,7 @@
 # Reports a robot's x, y, and facing
 class Reporter
-  def initialize
+  def initialize(output_filename)
+    @output_filename = output_filename
     @reports = []
   end
 
@@ -11,6 +12,11 @@ class Reporter
 
   def output
     @reports.join("\n")
+  end
+
+  def write_to_file
+    return if @output_filename.nil?
+    File.write(@output_filename, output)
   end
 
   # An individual report of x, y, and facing
