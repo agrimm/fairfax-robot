@@ -15,11 +15,7 @@ class InputParser
     paddock_line, place_line, instruction_line = input.split("\n")
     instruction_line ||= ""
     paddock = parse_paddock_line(paddock_line)
-    place_command = parse_place_line(place_line)
-    other_commands = parse_instruction_line(instruction_line)
-    # FIXME: Get rid of report command.
-    report_command = ReportCommand.new
-    commands = [place_command] + other_commands + [report_command]
+    commands = parse_robot_line_pair(place_line, instruction_line)
     [paddock, commands]
   end
 
@@ -29,6 +25,14 @@ class InputParser
     x = Integer(x_str)
     y = Integer(y_str)
     Paddock.new(x, y)
+  end
+
+  def parse_robot_line_pair(place_line, instruction_line)
+    place_command = parse_place_line(place_line)
+    other_commands = parse_instruction_line(instruction_line)
+    # FIXME: Get rid of report command.
+    report_command = ReportCommand.new
+    [place_command] + other_commands + [report_command]
   end
 
   def parse_place_line(line)
