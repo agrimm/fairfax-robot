@@ -35,7 +35,6 @@ class InputParser
   def parse_robot_line_pair(place_line, instruction_line)
     place_command = parse_place_line(place_line)
     other_commands = parse_instruction_line(instruction_line)
-    # FIXME: Get rid of report command.
     report_command = ReportCommand.new
     [place_command] + other_commands + [report_command]
   end
