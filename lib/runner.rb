@@ -3,7 +3,7 @@ $LOAD_PATH.unshift __dir__
 require "reporter"
 require "robot"
 require "paddock"
-require "command_parser"
+require "input_parser"
 
 # Runs the whole program
 class Runner
@@ -14,8 +14,8 @@ class Runner
     robot = Robot.new(reporter, paddock)
 
     input = File.read(input_filename)
-    command_parser = CommandParser.new
-    commands = command_parser.parse(input)
+    input_parser = InputParser.new
+    commands = input_parser.parse(input)
     commands.each do |command|
       command.run(robot)
     end

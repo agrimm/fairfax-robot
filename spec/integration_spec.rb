@@ -1,6 +1,6 @@
 require "factory_girl"
 require_relative "./factories/robot_factory"
-require "command_parser"
+require "input_parser"
 
 RSpec.describe "integration specs" do
   it "gives the correct result for example a" do
@@ -9,8 +9,8 @@ RSpec.describe "integration specs" do
             "0 0 N\n" \
             "M\n"
 
-    command_parser = CommandParser.new
-    commands = command_parser.parse(input)
+    input_parser = InputParser.new
+    commands = input_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
     expect(robot.output).to eq("0 1 N")
@@ -22,8 +22,8 @@ RSpec.describe "integration specs" do
             "0 0 N\n" \
             "L\n"
 
-    command_parser = CommandParser.new
-    commands = command_parser.parse(input)
+    input_parser = InputParser.new
+    commands = input_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
     expect(robot.output).to eq("0 0 W")
@@ -35,8 +35,8 @@ RSpec.describe "integration specs" do
             "1 2 E\n" \
             "MMLM\n"
 
-    command_parser = CommandParser.new
-    commands = command_parser.parse(input)
+    input_parser = InputParser.new
+    commands = input_parser.parse(input)
     commands.each { |command| command.run(robot) }
 
     expect(robot.output).to eq("3 3 N")

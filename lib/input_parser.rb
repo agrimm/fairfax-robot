@@ -4,8 +4,10 @@ require "left_command"
 require "right_command"
 require "report_command"
 
-# Parse input to produce commands
-class CommandParser
+# Parse input about:
+#   * Where each robot starts
+#   * Commands for each robot
+class InputParser
   def parse(input)
     # FIXME: This will have to handle multiple robots
     _paddock_line, place_line, instruction_line = input.split("\n")
