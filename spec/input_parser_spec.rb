@@ -68,4 +68,13 @@ RSpec.describe InputParser do
 
     expect { input_parser.parse(input) }.to_not raise_error
   end
+
+  it "does not have a problem with no commands" do
+    input_parser = InputParser.new
+    input = "5 5\n" \
+            "1 2 E\n" \
+            "\n"
+
+    expect { input_parser.parse(input) }.to_not raise_error
+  end
 end

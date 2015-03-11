@@ -13,6 +13,7 @@ class InputParser
   def parse(input)
     # FIXME: This will have to handle multiple robots
     paddock_line, place_line, instruction_line = input.split("\n")
+    instruction_line ||= ""
     paddock = parse_paddock_line(paddock_line)
     place_command = parse_place_line(place_line)
     other_commands = parse_instruction_line(instruction_line)
