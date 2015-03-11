@@ -8,10 +8,12 @@ class Robot
 
   def_delegators :@facing, :facing
   def_delegators :@reporter, :output
+  def_delegators :@paddock, :safe_position?
 
-  def initialize(reporter)
+  def initialize(reporter, paddock)
     @placed = false
     @reporter = reporter
+    @paddock = paddock
   end
 
   def place(x, y, facing)
@@ -20,15 +22,6 @@ class Robot
     @y = y
     @facing = facing
     @placed = true
-  end
-
-  # 5 by 5 table starting at 0,0
-  # so a value of 5 is not safe
-  def safe_position?(x, y)
-    x >= 0 &&
-      x <= 4 &&
-      y >= 0 &&
-      y <= 4
   end
 
   def move
