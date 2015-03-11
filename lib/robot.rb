@@ -11,7 +11,6 @@ class Robot
   def_delegators :@paddock, :safe_position?
 
   def initialize(reporter, paddock)
-    @placed = false
     @reporter = reporter
     @paddock = paddock
   end
@@ -21,12 +20,9 @@ class Robot
     @x = x
     @y = y
     @facing = facing
-    @placed = true
   end
 
   def move
-    return unless @placed
-
     new_x = @x + @facing.x_change
     new_y = @y + @facing.y_change
 
@@ -37,20 +33,14 @@ class Robot
   end
 
   def rotate_left
-    return unless @placed
-
     @facing = @facing.rotate_left
   end
 
   def rotate_right
-    return unless @placed
-
     @facing = @facing.rotate_right
   end
 
   def report
-    return unless @placed
-
     @reporter.report(@x, @y, @facing)
   end
 end
